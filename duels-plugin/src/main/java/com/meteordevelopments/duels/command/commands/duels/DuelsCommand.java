@@ -4,7 +4,9 @@ import com.meteordevelopments.duels.DuelsPlugin;
 import com.meteordevelopments.duels.Permissions;
 import com.meteordevelopments.duels.command.BaseCommand;
 import com.meteordevelopments.duels.command.commands.duels.subcommands.*;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class DuelsCommand extends BaseCommand {
 
@@ -44,6 +46,15 @@ public class DuelsCommand extends BaseCommand {
 
     @Override
     protected void execute(final CommandSender sender, final String label, final String[] args) {
-        lang.sendMessage(sender, "COMMAND.duels.usage", "command", label);
+        if (args.length == 0) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                Bukkit.dispatchCommand(player, "dm open duels");
+            } else {
+                lang.sendMessage(sender, "COMMAND.general.player-only");
+            }
+        } else {
+            lang.sendMessage(sender, "COMMAND.duels.usage", "command", label);
+        }
     }
 }
